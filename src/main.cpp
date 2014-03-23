@@ -1,11 +1,4 @@
-#include <GL/glew.h>
-
-#include <SDL.h>
-#include <SDL_opengl.h>
-
-#include <iostream>
-
-#include <shader.h>
+#include <main.h>
 
 void checkGlError() {
     GLenum glError = glGetError();
@@ -64,23 +57,27 @@ void load_triangle() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     checkGlError();
 
-    Shader vertexShader(GL_VERTEX_SHADER, "shaders/vertexshader");
+    Shader vertexShader(GL_VERTEX_SHADER, "shaders/simple.vert");
     checkGlError();
-    Shader fragmentShader(GL_FRAGMENT_SHADER, "shaders/fragmentshader");
+    Shader fragmentShader(GL_FRAGMENT_SHADER, "shaders/simple.frag");
     checkGlError();
 
     GLuint shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader.getReference());
     glAttachShader(shaderProgram, fragmentShader.getReference());
+    checkGlError();
 
     glBindFragDataLocation(shaderProgram, 0, "outColor");
+    checkGlError();
 
     glLinkProgram(shaderProgram);
     glUseProgram(shaderProgram);
+    checkGlError();
 
     GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
     glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(posAttrib);
+    checkGlError();
 
 }
 
