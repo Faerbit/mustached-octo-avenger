@@ -13,8 +13,8 @@ link_directories(${PROJECT_BINARY_DIR})
 target_link_libraries(${ProjectName} ${OPENGL_LIBRARIES})
 target_link_libraries(${ProjectName} ${GLEW_LIBRARIES})
 target_link_libraries(${ProjectName} ${SDL2_LIBRARIES})
-install (TARGETS ${ProjectName} DESTINATION .)
 #copy shaders
-add_custom_command(TARGET ${ProjectName} COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/src/shaders ${PROJECT_BINARY_DIR}/src/shaders)
-#install shaders
+file(COPY ${PROJECT_SOURCE_DIR}/src/shaders DESTINATION ${PROJECT_BINARY_DIR}/src)
+#install targets
+install (TARGETS ${ProjectName} DESTINATION .)
 install (DIRECTORY ${PROJECT_BINARY_DIR}/src/shaders DESTINATION .)
