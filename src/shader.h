@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <streambuf>
+#endif
 
 
 class Shader {
@@ -17,4 +18,3 @@ class Shader {
         GLuint reference;
 };
 
-#endif
