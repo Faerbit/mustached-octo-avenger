@@ -3,6 +3,23 @@ set(ProjectName mustached-octo-avenger)
 project(${ProjectName})
 include (InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_PACKAGE_VERSION_MAJOR 0)
+set(CPACK_PACKAGE_VERSION_MINOR 0)
+#use git commit as patch version
+find_program( Git_EXECUTABLE NAMES git git.cmd PATHS
+    ${Git_DIR}
+    ENV PATHS
+    $ENV{Git_DIR}
+)
+execute_process( COMMAND ${Git_EXECUTABLE} "log" "-n" "1" "--pretty=\"%h\"" 
+                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} 
+                 OUTPUT_VARIABLE Git_Commit_Hash 
+                 OUTPUT_STRIP_TRAILING_WHITESPACE
+                 )
+string( REGEX REPLACE "^\"(.*)\"$" "\\1" Git_Commit_Hash ${Git_Commit_Hash} )
+message(STATUS "git commit: ${Git_Commit_Hash}")
+set(CPACK_PACKAGE_VERSION_PATCH ${Git_Commit_Hash})
+set(CPACK_PACKAGE_VENDOR Faerbit)
 include (CPack)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 find_package(PkgConfig REQUIRED)
