@@ -13,12 +13,17 @@ include_directories(${OPENGL_INCLUDE_DIRS})
 include_directories(${GLEW_INCLUDE_DIRS})
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/src)
+# SOIL Library
+include_directories(${PROJECT_SOURCE_DIR}/src/soil)
+file(GLOB SOIL_src ${PROJECT_SOURCE_DIR}/src/soil/*.c)
+add_library(SOIL ${SOIL_src})
 file(GLOB Executables ${PROJECT_SOURCE_DIR}/src/*.cpp)
 add_executable (${ProjectName} ${Executables})
 link_directories(${PROJECT_BINARY_DIR})
 target_link_libraries(${ProjectName} ${OPENGL_LIBRARIES})
 target_link_libraries(${ProjectName} ${GLEW_LIBRARIES})
 target_link_libraries(${ProjectName} ${SDL2_LIBRARIES})
+target_link_libraries(${ProjectName} SOIL)
 #copy shaders
 file(COPY ${PROJECT_SOURCE_DIR}/src/shaders DESTINATION ${PROJECT_BINARY_DIR})
 #copy assets
