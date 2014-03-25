@@ -35,20 +35,21 @@ void checkGlError() {
 }
 
 int main(int argc, char* argv[]) {
+
     Window window("Octo Avenger", 1024, 786, false);
     Context context(window.getWindow());
 
     float vertices[] = {
         //Position    Texcoords
-        -0.5f,  1.0f, 0.0f, 0.0f, 0.0f, // Top-left
-         0.5f,  1.0f, 1.0f, 0.0f, 0.0f, // Top-right
+        -0.5f,  0.8f, 0.0f, 0.0f, 0.0f, // Top-left
+         0.5f,  0.8f, 1.0f, 0.0f, 0.0f, // Top-right
          0.5f,  0.0f, 1.0f, 1.0f, 0.0f, // Bottom-right
         -0.5f,  0.0f, 0.0f, 1.0f, 0.0f, // Bottom-left
             //Mirror
         -0.5f,  0.0f, 0.0f, 1.0f, 1.0f, // Top-left
          0.5f,  0.0f, 1.0f, 1.0f, 1.0f, // Top-right
-         0.5f, -1.0f, 1.0f, 0.0f, 1.0f, // Bottom-right
-        -0.5f, -1.0f, 0.0f, 0.0f, 1.0f // Bottom-left
+         0.5f, -0.8f, 1.0f, 0.0f, 1.0f, // Bottom-right
+        -0.5f, -0.8f, 0.0f, 0.0f, 1.0f // Bottom-left
     };
 
     GLuint vertexArrayObject;
@@ -94,6 +95,7 @@ int main(int argc, char* argv[]) {
     glEnableVertexAttribArray(texAttrib);
     glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)(2*sizeof(float)));
 
+
     GLint markerAttrib = glGetAttribLocation(shaderProgram, "marker");
     glEnableVertexAttribArray(markerAttrib);
     glVertexAttribPointer(markerAttrib, 1, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)(4*sizeof(float)));
@@ -134,15 +136,24 @@ int main(int argc, char* argv[]) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     auto timer = glGetUniformLocation(shaderProgram, "time");
+    GLint uniTrans = glGetUniformLocation(shaderProgram, "trans");
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     checkGlError();
 
     SDL_Event windowEvent;
     while(true) {
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
         float time = (float)clock()/(float)CLOCKS_PER_SEC;
+
+        glm::mat4 trans;
+        trans = glm::rotate(trans, time*10.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+
+        glUniformMatrix4fv(uniTrans, 1, GL_FALSE, glm::value_ptr(trans));
+
         glUniform1f(timer, (sin(time * 50.0f)+1.0f)/2.0f);
+
         glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
         if (SDL_PollEvent(&windowEvent)) {
             if (windowEvent.type == SDL_QUIT ||
