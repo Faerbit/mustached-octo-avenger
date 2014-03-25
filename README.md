@@ -1,4 +1,4 @@
-#mustached-octo-avenger
+#Octo Avenger
 
 Top Down Space Shooter in the making
 

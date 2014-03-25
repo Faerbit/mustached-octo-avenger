@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 
-    SDL_Window* window = SDL_CreateWindow("Mustached Octo Avenger", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 786, SDL_WINDOW_OPENGL);
+    SDL_Window* window = SDL_CreateWindow("Octo Avenger", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 786, SDL_WINDOW_OPENGL);
     SDL_GLContext context = SDL_GL_CreateContext(window);
 
     glewExperimental = GL_TRUE;
