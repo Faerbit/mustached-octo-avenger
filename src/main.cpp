@@ -50,11 +50,16 @@ int main(int argc, char* argv[]) {
     checkGlError();
 
     float vertices[] = {
-        //  Position      Color             Texcoords
-        -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
-         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
-        -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
+        //Position    Texcoords
+        -0.5f,  1.0f, 0.0f, 0.0f, 0.0f, // Top-left
+         0.5f,  1.0f, 1.0f, 0.0f, 0.0f, // Top-right
+         0.5f,  0.0f, 1.0f, 1.0f, 0.0f, // Bottom-right
+        -0.5f,  0.0f, 0.0f, 1.0f, 0.0f, // Bottom-left
+            //Mirror
+        -0.5f,  0.0f, 0.0f, 1.0f, 1.0f, // Top-left
+         0.5f,  0.0f, 1.0f, 1.0f, 1.0f, // Top-right
+         0.5f, -1.0f, 1.0f, 0.0f, 1.0f, // Bottom-right
+        -0.5f, -1.0f, 0.0f, 0.0f, 1.0f // Bottom-left
     };
 
     GLuint vertexArrayObject;
@@ -69,7 +74,9 @@ int main(int argc, char* argv[]) {
 
     GLuint elements[] = {
         0, 1, 2,
-        2, 3, 0
+        0, 3, 2,
+        4, 5, 6,
+        4, 7, 6
     };
 
     GLuint elementBufferObject;
@@ -92,22 +99,18 @@ int main(int argc, char* argv[]) {
 
     GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
     glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), 0);
-    checkGlError();
-
-    GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-    glEnableVertexAttribArray(colAttrib);
-    glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(2*sizeof(float)));
-    checkGlError();
+    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float), 0);
 
     GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord");
     glEnableVertexAttribArray(texAttrib);
-    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(5*sizeof(float)));
-    checkGlError();
+    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)(2*sizeof(float)));
+
+    GLint markerAttrib = glGetAttribLocation(shaderProgram, "marker");
+    glEnableVertexAttribArray(markerAttrib);
+    glVertexAttribPointer(markerAttrib, 1, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)(4*sizeof(float)));
 
     GLuint textures[2];
     glGenTextures(2, textures);
-    checkGlError();
 
     int width, height;
     unsigned char* image;
@@ -118,6 +121,9 @@ int main(int argc, char* argv[]) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     SOIL_free_image_data(image);
     glUniform1i(glGetUniformLocation(shaderProgram, "texKitten"), 0);
+
+    glGenerateMipmap(GL_TEXTURE_2D);
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -138,7 +144,7 @@ int main(int argc, char* argv[]) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    auto blending = glGetUniformLocation(shaderProgram, "blending");
+    auto timer = glGetUniformLocation(shaderProgram, "time");
 
     checkGlError();
 
@@ -147,8 +153,8 @@ int main(int argc, char* argv[]) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         float time = (float)clock()/(float)CLOCKS_PER_SEC;
-        glUniform1f(blending, (sin(time * 50.0f)+1.0f)/2.0f);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glUniform1f(timer, (sin(time * 50.0f)+1.0f)/2.0f);
+        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
         if (SDL_PollEvent(&windowEvent)) {
             if (windowEvent.type == SDL_QUIT ||
                 (windowEvent.type == SDL_KEYUP &&
