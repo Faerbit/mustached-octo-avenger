@@ -35,7 +35,8 @@ void checkGlError() {
 }
 
 int main(int argc, char* argv[]) {
-    Context context("Octo Avenger", 1024, 786, false);
+    Window window("Octo Avenger", 1024, 786, false);
+    Context context(window.getWindow());
 
     float vertices[] = {
         //Position    Texcoords
@@ -149,7 +150,7 @@ int main(int argc, char* argv[]) {
                 windowEvent.key.keysym.sym == SDLK_ESCAPE))
                     break;
         }
-        SDL_GL_SwapWindow(context.getWindow());
+        SDL_GL_SwapWindow(window.getWindow());
     }
     glDeleteProgram(shaderProgram);
     glDeleteBuffers(1, &vertexBuffer);

@@ -5,6 +5,7 @@
 
 #include <iostream>
 
+#include <window.h>
 #include <context.h>
 #include <shader.h>
 
