@@ -5,7 +5,7 @@ Window::Window(std::string title, int width, int height, bool fullscreen) {
 
     const char* ctitle = title.c_str();
     if (fullscreen) {
-        std::cout << "Fullscreen mode not implemented" << std::endl;
+        this->window = SDL_CreateWindow(ctitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
     }
     else {
         this->window = SDL_CreateWindow(ctitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
