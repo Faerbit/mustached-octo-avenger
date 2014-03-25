@@ -35,19 +35,7 @@ void checkGlError() {
 }
 
 int main(int argc, char* argv[]) {
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-
-    SDL_Window* window = SDL_CreateWindow("Octo Avenger", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 786, SDL_WINDOW_OPENGL);
-    SDL_GLContext context = SDL_GL_CreateContext(window);
-
-    glewExperimental = GL_TRUE;
-    checkGlError();
-    glewInit();
-    std::cout << "glewInit GlError:\n";
-    checkGlError();
+    Context context("Octo Avenger", 1024, 786, false);
 
     float vertices[] = {
         //Position    Texcoords
@@ -161,12 +149,10 @@ int main(int argc, char* argv[]) {
                 windowEvent.key.keysym.sym == SDLK_ESCAPE))
                     break;
         }
-        SDL_GL_SwapWindow(window);
+        SDL_GL_SwapWindow(context.getWindow());
     }
     glDeleteProgram(shaderProgram);
     glDeleteBuffers(1, &vertexBuffer);
     glDeleteVertexArrays(1, &vertexArrayObject);
-    SDL_GL_DeleteContext(context);
-    SDL_Quit();
     return 0;
 }
