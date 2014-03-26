@@ -41,15 +41,15 @@ int main(int argc, char* argv[]) {
 
     float vertices[] = {
         //Position    Texcoords
-        -0.5f,  0.8f, 0.0f, 0.0f, 0.0f, // Top-left
-         0.5f,  0.8f, 1.0f, 0.0f, 0.0f, // Top-right
-         0.5f,  0.0f, 1.0f, 1.0f, 0.0f, // Bottom-right
-        -0.5f,  0.0f, 0.0f, 1.0f, 0.0f, // Bottom-left
+        -0.5f,  0.8f, 0.0f, 0.0f,  // Top-left
+         0.5f,  0.8f, 1.0f, 0.0f,  // Top-right
+         0.5f,  0.0f, 1.0f, 1.0f,  // Bottom-right
+        -0.5f,  0.0f, 0.0f, 1.0f,  // Bottom-left
             //Mirror
-        -0.5f,  0.0f, 0.0f, 1.0f, 1.0f, // Top-left
-         0.5f,  0.0f, 1.0f, 1.0f, 1.0f, // Top-right
-         0.5f, -0.8f, 1.0f, 0.0f, 1.0f, // Bottom-right
-        -0.5f, -0.8f, 0.0f, 0.0f, 1.0f // Bottom-left
+        -0.5f,  0.0f, 0.0f, 1.0f,  // Top-left
+         0.5f,  0.0f, 1.0f, 1.0f,  // Top-right
+         0.5f, -0.8f, 1.0f, 0.0f,  // Bottom-right
+        -0.5f, -0.8f, 0.0f, 0.0f  // Bottom-left
     };
 
     GLuint vertexArrayObject;
@@ -89,16 +89,24 @@ int main(int argc, char* argv[]) {
 
     GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
     glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float), 0);
+    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), 0);
 
     GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord");
     glEnableVertexAttribArray(texAttrib);
-    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)(2*sizeof(float)));
+    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (void*)(2*sizeof(float)));
 
+    glm::mat4 view = glm::lookAt(
+        glm::vec3(1.2f, 1.2f, 1.2f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec3(0.0f, 0.0f, 1.0f)
+    );
+    
+    GLint uniView = glGetUniformLocation(shaderProgram, "view");
+    glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
 
-    GLint markerAttrib = glGetAttribLocation(shaderProgram, "marker");
-    glEnableVertexAttribArray(markerAttrib);
-    glVertexAttribPointer(markerAttrib, 1, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)(4*sizeof(float)));
+    glm::mat4 projection = glm::perspective(45.0f, 1024.0f/786.0f, 1.0f, 10.f);
+    GLint uniProjection = glGetUniformLocation(shaderProgram, "projection");
+    glUniformMatrix4fv(uniProjection, 1, GL_FALSE, glm::value_ptr(projection));
 
     GLuint textures[2];
     glGenTextures(2, textures);
@@ -115,8 +123,8 @@ int main(int argc, char* argv[]) {
 
     glGenerateMipmap(GL_TEXTURE_2D);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     checkGlError();
@@ -130,13 +138,13 @@ int main(int argc, char* argv[]) {
 
     glGenerateMipmap(GL_TEXTURE_2D);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     auto timer = glGetUniformLocation(shaderProgram, "time");
-    GLint uniTrans = glGetUniformLocation(shaderProgram, "trans");
+    GLint uniModel = glGetUniformLocation(shaderProgram, "model");
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     checkGlError();
@@ -150,7 +158,7 @@ int main(int argc, char* argv[]) {
         glm::mat4 trans;
         trans = glm::rotate(trans, time*10.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
-        glUniformMatrix4fv(uniTrans, 1, GL_FALSE, glm::value_ptr(trans));
+        glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(trans));
 
         glUniform1f(timer, (sin(time * 50.0f)+1.0f)/2.0f);
 

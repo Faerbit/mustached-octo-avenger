@@ -14,13 +14,5 @@ void main()
 {
     vec4 colKitten = texture(texKitten, Texcoord);
     vec4 colPuppy  = texture(texPuppy, Texcoord);
-    if (Marker != 1.0f)
-        outColor = mix(colKitten, colPuppy, time);
-    else
-    {
-        vec4 outPuppy = texture(texPuppy, vec2(Texcoord.x + sin(Texcoord.y * 15.0 + time * 5.0) / 70.0, Texcoord.y)) * vec4(0.7, 0.7, 1.0, 1.0);
-        vec4 outKitten = texture(texKitten, vec2(Texcoord.x + sin(Texcoord.y * 15.0 + time * 5.0) / 70.0, Texcoord.y)) * vec4(0.7, 0.7, 1.0, 1.0);
-        outColor = mix(outKitten, outPuppy, time);
-    }
-
+    outColor = mix(colKitten, colPuppy, time);
 }

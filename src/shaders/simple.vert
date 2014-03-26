@@ -2,16 +2,16 @@
 
 in vec2 position;
 in vec2 texcoord;
-in float marker;
 
 out vec2 Texcoord;
 out float Marker;
 
-uniform mat4 trans;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
     Texcoord = texcoord;
-    Marker = marker;
-    gl_Position = trans*vec4(position, 0.0, 1.0);
+    gl_Position = projection*view*model*vec4(position, 0.0, 1.0);
 }
