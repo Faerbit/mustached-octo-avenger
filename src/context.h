@@ -17,3 +17,5 @@ class Context {
     private:
         SDL_GLContext context;
 };
+
+void printGlError();

@@ -1,38 +1,5 @@
 #include <main.h>
 
-void checkGlError() {
-    GLenum glError = glGetError();
-
-    switch (glError) {
-        case GL_NO_ERROR:
-            std::cout << "GL_NO_ERROR\n";
-            break;
-        case GL_INVALID_ENUM:
-            std::cerr << "GL_INVALID_ENUM\n";
-            break;
-        case GL_INVALID_VALUE:
-            std::cerr << "GL_INVALID_VALUE\n";
-            break;
-        case GL_INVALID_OPERATION:
-            std::cerr << "GL_INVALID_OPERATION\n";
-            break;
-        case GL_INVALID_FRAMEBUFFER_OPERATION:
-            std::cerr << "GL_INVALID_FRAMEBUFFER_OPERATION\n";
-            break;
-        case GL_OUT_OF_MEMORY:
-            std::cerr << "GL_OUT_OF_MEMORY\n";
-            break;
-        case GL_STACK_UNDERFLOW:
-            std::cerr << "GL_STACK_UNDERFLOW\n";
-            break;
-        case GL_STACK_OVERFLOW:
-            std::cerr << "GL_STACK_OVERFLOW\n";
-            break;
-        default:
-            std::cerr << "Unknown OpenGL error!\n";
-            break;
-    }
-}
 
 int main(int argc, char* argv[]) {
 
@@ -127,7 +94,7 @@ int main(int argc, char* argv[]) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    checkGlError();
+    printGlError();
 
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textures[1]);
@@ -147,7 +114,7 @@ int main(int argc, char* argv[]) {
     GLint uniModel = glGetUniformLocation(shaderProgram, "model");
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-    checkGlError();
+    printGlError();
 
     SDL_Event windowEvent;
     while(true) {

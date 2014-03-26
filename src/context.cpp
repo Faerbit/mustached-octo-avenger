@@ -20,11 +20,48 @@ Context::Context(SDL_Window* window) {
     }
 }
 
-
 SDL_GLContext Context::getContext() {
     return this->context;
 }
 
 Context::~Context() {
     SDL_GL_DeleteContext(this->context);
+}
+
+void printGlError() {
+    GLenum glError = glGetError();
+    bool done = false;
+    while (!done) {
+        glError = glGetError();
+        switch (glError) {
+            case GL_NO_ERROR:
+                std::cout << "GL_NO_ERROR\n";
+                done = true;
+                break;
+            case GL_INVALID_ENUM:
+                std::cerr << "GL_INVALID_ENUM\n";
+                break;
+            case GL_INVALID_VALUE:
+                std::cerr << "GL_INVALID_VALUE\n";
+                break;
+            case GL_INVALID_OPERATION:
+                std::cerr << "GL_INVALID_OPERATION\n";
+                break;
+            case GL_INVALID_FRAMEBUFFER_OPERATION:
+                std::cerr << "GL_INVALID_FRAMEBUFFER_OPERATION\n";
+                break;
+            case GL_OUT_OF_MEMORY:
+                std::cerr << "GL_OUT_OF_MEMORY\n";
+                break;
+            case GL_STACK_UNDERFLOW:
+                std::cerr << "GL_STACK_UNDERFLOW\n";
+                break;
+            case GL_STACK_OVERFLOW:
+                std::cerr << "GL_STACK_OVERFLOW\n";
+                break;
+            default:
+                std::cerr << "Unknown OpenGL error!\n";
+                break;
+        }
+    }
 }
