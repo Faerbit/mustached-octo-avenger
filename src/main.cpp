@@ -7,16 +7,48 @@ int main(int argc, char* argv[]) {
     Context context(window.getWindow());
 
     float vertices[] = {
-        //Position    Texcoords
-        -0.5f,  0.8f, 0.0f, 0.0f,  // Top-left
-         0.5f,  0.8f, 1.0f, 0.0f,  // Top-right
-         0.5f,  0.0f, 1.0f, 1.0f,  // Bottom-right
-        -0.5f,  0.0f, 0.0f, 1.0f,  // Bottom-left
-            //Mirror
-        -0.5f,  0.0f, 0.0f, 1.0f,  // Top-left
-         0.5f,  0.0f, 1.0f, 1.0f,  // Top-right
-         0.5f, -0.8f, 1.0f, 0.0f,  // Bottom-right
-        -0.5f, -0.8f, 0.0f, 0.0f  // Bottom-left
+        // X      Y     Z     R     G     B     U     V
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+
+         0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f
     };
 
     GLuint vertexArrayObject;
@@ -29,20 +61,6 @@ int main(int argc, char* argv[]) {
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    GLuint elements[] = {
-        0, 1, 2,
-        0, 3, 2,
-        4, 5, 6,
-        4, 7, 6
-    };
-
-    GLuint elementBufferObject;
-    glGenBuffers(1, &elementBufferObject);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-
-
     Shader vertexShader(GL_VERTEX_SHADER, "shaders/simple.vert");
     Shader fragmentShader(GL_FRAGMENT_SHADER, "shaders/simple.frag");
 
@@ -54,13 +72,17 @@ int main(int argc, char* argv[]) {
     glLinkProgram(shaderProgram);
     glUseProgram(shaderProgram);
 
-    GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+    GLint colAttrib = glGetAttribLocation(shaderProgram, "position");
+    glEnableVertexAttribArray(colAttrib);
+    glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), 0);
+
+    GLint posAttrib = glGetAttribLocation(shaderProgram, "color");
     glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), 0);
+    glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
 
     GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord");
     glEnableVertexAttribArray(texAttrib);
-    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (void*)(2*sizeof(float)));
+    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
 
     glm::mat4 view = glm::lookAt(
         glm::vec3(1.2f, 1.2f, 1.2f),
@@ -114,23 +136,24 @@ int main(int argc, char* argv[]) {
     GLint uniModel = glGetUniformLocation(shaderProgram, "model");
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+    glEnable(GL_DEPTH_TEST); 
+
     printGlError();
 
     SDL_Event windowEvent;
     while(true) {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         float time = (float)clock()/(float)CLOCKS_PER_SEC;
 
         glm::mat4 model;
-        model = glm::rotate(model, time*10.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-        model = glm::scale(model, glm::vec3(sin(time*10.0f)+1.0f/2.0f, sin(time*10.0f)+1.0f/2.0f, 1.0f));
+        model = glm::rotate(model, time*0.6f, glm::vec3(0.0f, 0.0f, 1.0f));
 
         glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
         glUniform1f(timer, (sin(time * 50.0f)+1.0f)/2.0f);
 
-        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
         if (SDL_PollEvent(&windowEvent)) {
             if (windowEvent.type == SDL_QUIT ||
                 (windowEvent.type == SDL_KEYUP &&
@@ -139,8 +162,10 @@ int main(int argc, char* argv[]) {
         }
         SDL_GL_SwapWindow(window.getWindow());
     }
+    glDeleteTextures(2, textures);
     glDeleteProgram(shaderProgram);
     glDeleteBuffers(1, &vertexBuffer);
     glDeleteVertexArrays(1, &vertexArrayObject);
+
     return 0;
 }
