@@ -48,7 +48,14 @@ int main(int argc, char* argv[]) {
          0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
          0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
         -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+
+        -1.0f, -1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+         1.0f, -1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+         1.0f,  1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+         1.0f,  1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+        -1.0f,  1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+        -1.0f, -1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
     };
 
     GLuint vertexArrayObject;
@@ -85,7 +92,7 @@ int main(int argc, char* argv[]) {
     glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
 
     glm::mat4 view = glm::lookAt(
-        glm::vec3(1.2f, 1.2f, 1.2f),
+        glm::vec3(2.0f, 2.0f, 2.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 0.0f, 1.0f)
     );
@@ -116,7 +123,6 @@ int main(int argc, char* argv[]) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    printGlError();
 
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textures[1]);
@@ -134,7 +140,7 @@ int main(int argc, char* argv[]) {
 
     auto timer = glGetUniformLocation(shaderProgram, "time");
     GLint uniModel = glGetUniformLocation(shaderProgram, "model");
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     glEnable(GL_DEPTH_TEST); 
 
@@ -155,7 +161,34 @@ int main(int argc, char* argv[]) {
 
         glUniform1f(timer, (sin(time * 0.8f)+1.0f)/2.0f);
 
+        // Draw cube
         glDrawArrays(GL_TRIANGLES, 0, 36);
+        
+        //Draw floor
+        glEnable(GL_STENCIL_TEST);
+        glStencilFunc(GL_ALWAYS, 1, 0xFF); //Set any stencil to 1
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+        glStencilMask(0xFF);//write to stencil buffer
+        glDepthMask(GL_FALSE);//don't write to depth buffer
+        glClear(GL_STENCIL_BUFFER_BIT);//clear stencil buffer
+
+        glDrawArrays(GL_TRIANGLES, 36, 6);
+
+        // Draw cube reflection
+        glStencilFunc(GL_EQUAL, 1, 0xFF); //Pass test if stencil value is 1
+        glStencilMask(0x00); //don't write to stencil buffer
+        glDepthMask(GL_TRUE); //write to depth buffer
+        
+        model = glm::scale(
+            glm::translate(model, glm::vec3(0, 0, -1)),
+            glm::vec3(1, 1, -1)
+        );
+        
+        glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+        glDisable(GL_STENCIL_TEST);
+
         if (SDL_PollEvent(&windowEvent)) {
             if (windowEvent.type == SDL_QUIT ||
                 (windowEvent.type == SDL_KEYUP &&
