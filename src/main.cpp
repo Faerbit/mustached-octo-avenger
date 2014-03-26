@@ -140,6 +140,7 @@ int main(int argc, char* argv[]) {
 
     auto timer = glGetUniformLocation(shaderProgram, "time");
     GLint uniModel = glGetUniformLocation(shaderProgram, "model");
+    GLint uniColor = glGetUniformLocation(shaderProgram, "overrideColor");
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     glEnable(GL_DEPTH_TEST); 
@@ -185,7 +186,10 @@ int main(int argc, char* argv[]) {
         );
         
         glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform3f(uniColor, 0.3f, 0.3f, 0.3f);
         glDrawArrays(GL_TRIANGLES, 0, 36);
+
+        glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
 
         glDisable(GL_STENCIL_TEST);
 
