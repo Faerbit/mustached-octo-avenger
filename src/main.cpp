@@ -122,10 +122,11 @@ int main(int argc, char* argv[]) {
 
         float time = (float)clock()/(float)CLOCKS_PER_SEC;
 
-        glm::mat4 trans;
-        trans = glm::rotate(trans, time*10.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+        glm::mat4 model;
+        model = glm::rotate(model, time*10.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::scale(model, glm::vec3(sin(time*10.0f)+1.0f/2.0f, sin(time*10.0f)+1.0f/2.0f, 1.0f));
 
-        glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(trans));
+        glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
         glUniform1f(timer, (sin(time * 50.0f)+1.0f)/2.0f);
 
