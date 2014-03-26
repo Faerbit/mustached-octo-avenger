@@ -1,12 +1,12 @@
 #ifndef MAIN_H_INCLUDED
 #define MAIN_H_INCLUDED
 
-#include <SOIL.h>
 
-#include <window.h>
 #include <context.h>
+#include <window.h>
 #include <shader.h>
 
+#include <SOIL.h>
 #define  GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
