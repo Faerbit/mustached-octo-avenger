@@ -3,8 +3,6 @@
 
 #include <SOIL.h>
 
-#include <iostream>
-
 #include <window.h>
 #include <context.h>
 #include <shader.h>
@@ -13,6 +11,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <iostream>
+#include <chrono>
+using std::chrono::duration_cast;
+using std::chrono::milliseconds;
+using std::chrono::steady_clock;
 
 #endif
 

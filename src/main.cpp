@@ -139,19 +139,21 @@ int main(int argc, char* argv[]) {
     glEnable(GL_DEPTH_TEST); 
 
     printGlError();
+    steady_clock::time_point start = steady_clock::now();
 
     SDL_Event windowEvent;
     while(true) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        float time = (float)clock()/(float)CLOCKS_PER_SEC;
+        steady_clock::time_point now = steady_clock::now();
+        float time = duration_cast<milliseconds>(now - start).count()/1000.0f;
 
         glm::mat4 model;
         model = glm::rotate(model, time*0.6f, glm::vec3(0.0f, 0.0f, 1.0f));
 
         glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
-        glUniform1f(timer, (sin(time * 50.0f)+1.0f)/2.0f);
+        glUniform1f(timer, (sin(time * 0.8f)+1.0f)/2.0f);
 
         glDrawArrays(GL_TRIANGLES, 0, 36);
         if (SDL_PollEvent(&windowEvent)) {
