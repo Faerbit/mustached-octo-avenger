@@ -1,9 +1,20 @@
-#include <context.h>
+#include <glwindow.h>
 
-Context::Context(SDL_Window* window) {
+GlWindow::GlWindow(std::string title, int width, int height, bool fullscreen) {
+    SDL_Init(SDL_INIT_VIDEO);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+
+    const char* ctitle = title.c_str();
+    if (fullscreen) {
+        this->window = SDL_CreateWindow(ctitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
+    }
+    else {
+        this->window = SDL_CreateWindow(ctitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
+    }
+
 
     this->context = SDL_GL_CreateContext(window);
 
@@ -20,12 +31,17 @@ Context::Context(SDL_Window* window) {
     }
 }
 
-SDL_GLContext Context::getContext() {
+SDL_Window* GlWindow::getWindow() {
+    return this->window;
+}
+
+SDL_GLContext GlWindow::getContext() {
     return this->context;
 }
 
-Context::~Context() {
+GlWindow::~GlWindow() {
     SDL_GL_DeleteContext(this->context);
+    SDL_Quit();
 }
 
 void printGlError() {
@@ -35,7 +51,6 @@ void printGlError() {
         glError = glGetError();
         switch (glError) {
             case GL_NO_ERROR:
-                std::cout << "GL_NO_ERROR\n";
                 done = true;
                 break;
             case GL_INVALID_ENUM:

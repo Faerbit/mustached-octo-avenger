@@ -2,9 +2,8 @@
 
 
 int main(int argc, char* argv[]) {
-
-    Window window("Octo Avenger", 1024, 786, false);
-    Context context(window.getWindow());
+    
+    GlWindow glwindow("Octo Avenger", 1024, 786, false);
 
     float vertices[] = {
         // X      Y     Z     R     G     B     U     V
@@ -199,7 +198,7 @@ int main(int argc, char* argv[]) {
                 windowEvent.key.keysym.sym == SDLK_ESCAPE))
                     break;
         }
-        SDL_GL_SwapWindow(window.getWindow());
+        SDL_GL_SwapWindow(glwindow.getWindow());
     }
     glDeleteTextures(2, textures);
     glDeleteProgram(shaderProgram);
