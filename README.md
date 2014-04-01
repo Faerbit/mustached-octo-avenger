@@ -8,7 +8,7 @@ Currently this isn't playable. It is rather an attempt to learn C++/OpenGL.
 
 Should be compatible with Windows/Mac OS X/Linux.
 Linux support by me.
-Max OS X support kindly provided by [jhedev](https://github.com/jhedev).
+Mac OS X support kindly provided by [jhedev](https://github.com/jhedev).
 
 ##Building
 
