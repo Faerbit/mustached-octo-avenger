@@ -5,7 +5,7 @@ int main(int argc, char* argv[]) {
     
     GlWindow glwindow("Octo Avenger", 1024, 786, false);
 
-    float vertices[] = {
+    GLfloat vertices[] = {
         // X      Y     Z     R     G     B     U     V
         -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
          0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
