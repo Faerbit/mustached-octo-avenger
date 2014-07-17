@@ -24,4 +24,4 @@ cmake ..
 make
 ```
 
-The resulting binary will be in build/src
+The resulting binary will be in build.
