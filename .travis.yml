@@ -2,9 +2,9 @@ language: cpp
 compiler: gcc
 
 before_script:
-    - sudo apt-get update
-    - sudo apt-get upgrade
-    - sudo apt-get install ninja-build
+    - sudo apt-get -qq update
+    - sudo apt-get -qq upgrade
+    - sudo apt-get -qq install ninja-build
 
 script:
     - mkdir -p build
