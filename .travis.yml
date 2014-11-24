@@ -23,11 +23,12 @@ script:
 after_success:
     - cd $TRAVIS_BUILD_DIR/build
     - cpack
+    - export file=$(ls octo-avenger*.tar.gz)
 
 deploy:
   provider: releases
   api_key:
     secure: aFKHt/UpszjM9mt0FsYhJbUzdYb79lA5R3IRUk0+0ziQWcuC31GM8PA3Yb6EuVu0rKEPnD3fUD6iQFmcl4Aqm4h3n2ppDz9DJ83qDvtiXmMbkksYB1HPcJ1xAHcjz5xspNL6lGWeoPHKqr1OUgpqQVBaRthCz10nlXU8PZ/jEZk=
-  file: build/octo-avenger*.tar.gz
+  file: $file
   on:
     repo: Faerbit/octo-avenger
