@@ -1,6 +1,12 @@
 language: cpp
 compiler: gcc
 
+before_script:
+    sudo apt-get -qq update
+    sudo apt-get -qq install glew
+    sudo apt-get -qq install sdl2
+    sudo apt-get -qq install libglm-dev
+
 script:
     - mkdir -p build
     - cd build
