@@ -3,8 +3,8 @@ compiler: gcc
 
 before_script:
     - sudo apt-get -qq update
-    - sudo apt-get -qq install glew
-    - sudo apt-get -qq install sdl2
+    - sudo apt-get -qq install libglew-dev
+    - sudo apt-get -qq install libsdl2-dev
     - sudo apt-get -qq install libglm-dev
 
 script:
