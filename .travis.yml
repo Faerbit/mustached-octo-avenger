@@ -3,6 +3,7 @@ compiler: gcc
 
 before_script:
     - sudo apt-get update
+    - sudo apt-get upgrade
     - sudo apt-get install ninja-build
 
 script:
