@@ -4,7 +4,7 @@ compiler: gcc
 script:
     - mkdir -p build
     - cd build
-    - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+    - cmake -DCMAKE_BUILD_TYPE=Release ..
     - make -j$(($(nproc)+1))
 
 after_success:
