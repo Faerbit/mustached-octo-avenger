@@ -7,7 +7,7 @@ install:
     - sudo apt-get -qq install libglm-dev
     - curl -O http://www.libsdl.org/release/SDL2-2.0.3.tar.gz
     - tar -xzvf SDL2-2.0.3.tar.gz
-    - (cd SDL2-2.0.3 && 3/configure && make && sudo make install)
+    - (cd SDL2-2.0.3 && ./configure && make && sudo make install)
 
 script:
     - mkdir -p build
