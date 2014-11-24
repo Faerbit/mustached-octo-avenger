@@ -1,11 +1,13 @@
 language: cpp
 compiler: gcc
 
-before_script:
+install:
     - sudo apt-get -qq update
     - sudo apt-get -qq install libglew-dev
-    - sudo apt-get -qq install libsdl2-dev
     - sudo apt-get -qq install libglm-dev
+    - curl -O http://www.libsdl.org/release/SDL2-2.0.3.tar.gz
+    - tar -xzvf SDL2-2.0.3.tar.gz
+    - (cd SDL2-2.0.3 && 3/configure && make && sudo make install)
 
 script:
     - mkdir -p build
