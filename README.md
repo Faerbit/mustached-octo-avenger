@@ -1,4 +1,5 @@
 #Octo Avenger
+[![Build Status](https://travis-ci.org/Faerbit/octo-avenger.svg?branch=master)](https://travis-ci.org/Faerbit/octo-avenger)
 
 Top Down Space Shooter in the making
 
