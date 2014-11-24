@@ -2,6 +2,7 @@ language: cpp
 compiler: gcc
 
 install:
+    - echo "yes" | sudo add-apt-repository ppa:kalakris/cmake
     - sudo apt-get -qq update
     - sudo apt-get -qq install cmake
     - sudo apt-get -qq install libglew-dev
