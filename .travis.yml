@@ -2,14 +2,17 @@ language: cpp
 compiler: gcc
 
 install:
-    - echo "yes" | sudo add-apt-repository ppa:kalakris/cmake
+    - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+    - sudo add-apt-repository ppa:kalakris/cmake -y
     - sudo apt-get -qq update
     - sudo apt-get -qq install cmake
     - sudo apt-get -qq install libglew-dev
     - sudo apt-get -qq install libglm-dev
+    - sudo apt-get install -qq g++-4.8
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
     - curl -O http://www.libsdl.org/release/SDL2-2.0.3.tar.gz
     - tar -xzf SDL2-2.0.3.tar.gz
-    - "(cd SDL2-2.0.3 && ./configure && make && sudo make install)"
+    - (cd SDL2-2.0.3 && ./configure && make && sudo make install)
 
 script:
     - mkdir -p build
