@@ -1,0 +1,16 @@
+language: cpp
+compiler: gcc
+
+before_script:
+    sudo apt-get update
+    sudo apt-get install ninja-build
+
+script:
+    - mkdir -p build
+    - cd build
+    - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+    - ninja
+
+after_success:
+    - cd $TRAVIS_BUILD_DIR/build
+    - cpack
