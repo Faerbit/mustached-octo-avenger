@@ -2,7 +2,8 @@
 
 GlWindow::GlWindow(std::string title, int width, int height, bool fullscreen) {
     SDL_Init(SDL_INIT_VIDEO);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
+            SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
@@ -11,10 +12,13 @@ GlWindow::GlWindow(std::string title, int width, int height, bool fullscreen) {
 
     const char* ctitle = title.c_str();
     if (fullscreen) {
-        this->window = SDL_CreateWindow(ctitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
+        this->window = SDL_CreateWindow(ctitle, SDL_WINDOWPOS_CENTERED,
+                SDL_WINDOWPOS_CENTERED, width, height,
+                SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
     }
     else {
-        this->window = SDL_CreateWindow(ctitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
+        this->window = SDL_CreateWindow(ctitle, SDL_WINDOWPOS_CENTERED,
+                SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
     }
 
 
