@@ -30,7 +30,10 @@ GlWindow::GlWindow(std::string title, int width, int height, bool fullscreen) {
     if (glError != GL_NO_ERROR){
         std::cout << "Unexpected OpenGL error before glewInit()." << std::endl;
     }
-    glewInit();
+    GLenum err = glewInit();
+    if (GLEW_OK != err) {
+        std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
+    }
     glError = glGetError();
     if (glError != GL_INVALID_ENUM) {
         std::cout << "Unexpected OpenGL error after glewInit()." << std::endl;
