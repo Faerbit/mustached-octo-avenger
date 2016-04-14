@@ -8,7 +8,6 @@
 #include <iostream>
 #include <string>
 
-#endif 
 
 class GlWindow {
     public:
@@ -22,3 +21,5 @@ class GlWindow {
 };
 
 void printGlError();
+
+#endif
