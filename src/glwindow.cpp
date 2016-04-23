@@ -7,6 +7,8 @@ GlWindow::GlWindow(std::string title, int width, int height, bool fullscreen) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 8);
 
     const char* ctitle = title.c_str();
     if (fullscreen) {
@@ -21,21 +23,6 @@ GlWindow::GlWindow(std::string title, int width, int height, bool fullscreen) {
 
 
     this->context = SDL_GL_CreateContext(window);
-
-    glewExperimental = GL_TRUE;
-    // Ignore glewInit GlError
-    GLenum glError = glGetError();
-    if (glError != GL_NO_ERROR){
-        std::cout << "Unexpected OpenGL error before glewInit()." << std::endl;
-    }
-    GLenum err = glewInit();
-    if (GLEW_OK != err) {
-        std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
-    }
-    glError = glGetError();
-    if (glError != GL_INVALID_ENUM) {
-        std::cout << "Unexpected OpenGL error after glewInit()." << std::endl;
-    }
 }
 
 SDL_Window* GlWindow::getWindow() {

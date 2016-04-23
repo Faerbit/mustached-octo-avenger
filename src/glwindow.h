@@ -1,7 +1,8 @@
 #ifndef GLWINDOW_H_INCLUDED
 #define GLWINDOW_H_INCLUDED
 
-#include <GL/glew.h>
+//#include <GL/glew.h>
+#include <epoxy/gl.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
 
